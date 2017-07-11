@@ -4,7 +4,7 @@ Some Rails application, like this one, require saving automatically a
 form while the user is filling it, but continue allowing the user to edit.
 This was simpler to do with Turbolinks 2.5.3, therefore an application could 
 keep using turbolinks 2.5.3 but there would be problems to update to 
-Rails 5.1 (since turbolinks 2.5.3 uses ```before_filter``` depreacted in favor
+Rails 5.1 (since turbolinks 2.5.3 uses ```before_filter``` deprecated in favor
 of ```before_action```). Anyway there is solution with Turbolinks 5.0 
 although not very well documented. 
 
