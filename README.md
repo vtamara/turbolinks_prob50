@@ -19,7 +19,7 @@ git clone  https://github.com/vtamara/turbolinks_prob50.git
 ```
 - Launch server
 ```
-	cd turbolinks-prob50
+	cd turbolinks_prob50
 	bundle install
 	rails db:setup
 	rails s 
@@ -27,12 +27,12 @@ git clone  https://github.com/vtamara/turbolinks_prob50.git
 - Open the form in browser at http://127.0.0.1/model1s/new
 - You will see a form with two tabs (one field in the first one and two in 
   the second)
-[!tab1](tab1.png])
+[!tab1](doc/tab1.png])
 
 - When you change to the second tab, you will see that the server answers
   an AJAX request to save the form, and the user sees the contents of the
   second tab
-[!tab2](tab2.png])
+[!tab2](doc/tab2.png])
 
 
 To see the problem with turbolinks 5.0.1:
@@ -48,12 +48,12 @@ To see the problem with turbolinks 5.0.1:
 - Open in browser http://127.0.0.1/model1s/new and try to click on the
   link of the second tab
 - You will be redirected to the show page
-[!show](show.png)
+[!show](doc/show.png)
 
 
 Using turbolinks 2.5.3 the sequence of requests done by the browser when
 the user clicks on the link of the second tab is:
-[!requests-turbolinks2-5-3](requests-turbolinks2-5-3.png])
+[!requests-turbolinks2-5-3](doc/requests-turbolinks2-5-3.png])
 
 Using turbolinks 5.0.1 the sequence of requests is:
-[!requests-turbolinks5-0-1](requests-turbolinks5-0-1.png])
+[!requests-turbolinks5-0-1](doc/requests-turbolinks5-0-1.png])
