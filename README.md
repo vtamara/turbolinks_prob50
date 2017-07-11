@@ -98,7 +98,7 @@ documentation for it).
 
 # SOLUTIONS
 
-In order to obtain the same behavior of Turbolinks 2.5.3 in 
+In order to obtain the same behavior of Turbolinks 2.5.3 in this application with 
 Turbolinks 5.0.1  we have found two ways:
 
 1. Either in the controller ```app/controllers/model1s_controller.rb```
