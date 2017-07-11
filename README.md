@@ -42,7 +42,7 @@ To see the problem with turbolinks 5.0.3:
 
 Using turbolinks 2.5.3 the sequence of requests done by the browser when
 the user clicks on the link of the second tab is:
-[!requests-turbolinks2-5-3.png]
+[!requests-turbolinks2-5-3](requests-turbolinks2-5-3.png])
 
 Using turbolinks 5.0.3 the sequence of requests is:
-[!requests-turbolinks5-0-3.png]
+[!requests-turbolinks5-0-3](requests-turbolinks5-0-3.png])
