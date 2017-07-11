@@ -1,0 +1,59 @@
+<%= form_for @model1, :html => { :class => "form-horizontal model1" } do |f| %>
+
+  <% if @model1.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@model1.errors.count, "error") %> prohibited this model1 from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @model1.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+
+
+  <div role="tabpanel">
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active"><a href="#tab1" 
+           aria-controls="tab1" role="tab" class="sendform"
+           data-toggle="tab">Tab1</a></li>
+      <li role="presentation"><a href="#tab2" 
+           aria-controls="tab2" role="tab" class="sendform"
+           data-toggle="tab">Tab2</a></li>
+    </ul>
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="tab1">
+        <div class="form-group">
+          <%= f.label :field1, :class => 'control-label col-lg-2' %>
+          <div class="col-lg-10">
+            <%= f.text_field :field1, :class => 'form-control' %>
+          </div>
+          <%=f.error_span(:field1) %>
+        </div>
+      </div> 
+
+      <div role="tabpanel" class="tab-pane" id="tab2">
+        <div class="form-group">
+          <%= f.label :field2, :class => 'control-label col-lg-2' %>
+          <div class="col-lg-10">
+            <%= f.text_field :field2, :class => 'form-control' %>
+          </div>
+          <%=f.error_span(:field2) %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-lg-offset-2 col-lg-10">
+      <%= f.submit nil, :class => 'btn btn-primary' %>
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                model1s_path, :class => 'btn btn-default' %>
+    </div>
+  </div>
+
+<% end %>
