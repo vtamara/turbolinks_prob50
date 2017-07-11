@@ -2,7 +2,8 @@
 
 Some rails application, like this one, require saving automatically a 
 form while the user is filling it, but continue editing the form. 
-This was simpler to do with Turbolinks 2.5.3
+This was simpler to do with Turbolinks 2.5.3, but also possible with
+Turbolinks 5.0 although not very well documented.
 
 This simple application has one form with 2 tabs and some fields in each tab.
 It is expected that the form will save automatically when the user changes 
@@ -36,10 +37,9 @@ git clone  https://github.com/vtamara/turbolinks_prob50.git
 ![tab1](https://raw.githubusercontent.com/vtamara/turbolinks_prob50/master/doc/tab1.png)
 
 - When you change to the second tab, you will see that the server answers
-  an AJAX request to save the form, and the user can fill the fields of the
-  second tab
+  to an AJAX request by saving the form, and the user can fill the fields 
+  of the second tab
 ![tab2](https://raw.githubusercontent.com/vtamara/turbolinks_prob50/master/doc/tab2.png)
-
 
 To see the problem with turbolinks 5.0.1:
 - In the sources edit Gemfile and change the line
@@ -59,7 +59,7 @@ To see the problem with turbolinks 5.0.1:
 ```
 	rails s
 ```
-- Open in browser http://127.0.0.1/model1s/new and try to click on the
+- Open in the browser <http://127.0.0.1/model1s/new> and try to click on the
   link of the second tab
 - You will be redirected to the show page
 ![show](https://raw.githubusercontent.com/vtamara/turbolinks_prob50/master/doc/show.png)
@@ -70,50 +70,55 @@ Using turbolinks 2.5.3 the sequence of requests done by the browser when
 the user clicks on the link of the second tab is:
 ![requests-turbolinks2-5-3](https://raw.githubusercontent.com/vtamara/turbolinks_prob50/master/doc/requests-turbolinks2-5-3.png)
 
-Using turbolinks 5.0.1 the sequence of requests is:
+Using turbolinks 5.0.1 the sequence of requests is different:
 ![requests-turbolinks5-0-1](https://raw.githubusercontent.com/vtamara/turbolinks_prob50/master/doc/requests-turbolinks5-0-1.png)
 
-Checking more closely the README of turbolinks says:
+Checking more closely the README of turbolinks, it says:
 
->> Instead of submitting forms normally, submit them with XHR. In response to an XHR submit on the server, return JavaScript that performs a Turbolinks.visit to be evaluated by the browser.
+>> Instead of submitting forms normally, submit them with XHR. In 
+>> response to an XHR submit on the server, return JavaScript that 
+>> performs a Turbolinks.visit to be evaluated by the browser.
 >>
->> The Turbolinks Rails engine performs this optimization automatically for non-GET XHR requests that redirect with the redirect_to helper.
+>> The Turbolinks Rails engine performs this optimization automatically 
+>> for non-GET XHR requests that redirect with the redirect_to helper.
 
-And checking the source code of the gem turbolink-rails (v5.0.1), we notice that it interceps redirect_to:
+And checking the source code of the gem turbolink-rails (v5.0.1), we notice 
+that it interceps  ```redirect_to```:
 <https://github.com/turbolinks/turbolinks-rails/blob/master/lib/turbolinks/redirection.rb>
-and by default replacing the page when the xhr request is not GET.
+and by default it replaces the page in the browser when the xhr request is not 
+GET.
 
-Checking the source code it is possible to see a new option 
-for ```redirect_to```, it is ```turbolinks``` that is boolean (I have not found official 
+Checking the source code, we see a new option for ```redirect_to```, 
+it is ```turbolinks``` that is boolean (I have not found official 
 documentation for it).
 
 
 # SOLUTIONS
 
 In order to obtain the same behavior of Turbolinks 2.5.3 in 
-Turbolinks 5.0.1  
+Turbolinks 5.0.1  we have found two ways:
 
-1. Either in the controller app/controllers/model1s_controller.rb 
+1. Either in the controller ```app/controllers/model1s_controller.rb```
    change in the method update the line:
 ```
-        format.html { redirect_to @model1, notice: 'Model1 was successfully updated.' }
+format.html { redirect_to @model1, notice: 'Model1 was successfully updated.' }
 ```
 with
 ```
-        format.html { redirect_to @model1, notice: 'Model1 was successfully updated.', turbolinks: false }
+format.html { redirect_to @model1, notice: 'Model1 was successfully updated.', turbolinks: false }
 ```
 
 
-2. Or make the AJAX request asking for JSON instead of HTML, by changing
-in app/assets/javascripts/model1s.coffe
-
+2. Or make the AJAX request asking for json (or script) instead of HTML, 
+   by changing in ```app/assets/javascripts/model1s.coffe```
+```
 @send_form =  ->
   f=$('form')
   a=f.attr('action')
   $.post(a, f.serialize())
-
+```
 with
-
+```
 @send_form =  ->
   f=$('form')
   a=f.attr('action')
@@ -123,14 +128,13 @@ with
     data: f.serialize()
     dataType: 'json'
   });
-
+```
 
 The second solution uses the format.json of the action in the controller, 
-that doesn't try to render the whole page as the first solution does.
+it doesn't try to render the whole page as the first solution does.
 
-So, to obtain the increase of speed of turbolinks in a normal redirect_to 
-but avoiding to redirect in the browser, we prefer the second solution.
-
-
+Then to obtain the increase of speed of turbolinks in a normal redirect_to 
+when the users saves but avoiding to redirect in the browser when
+the form is saved automatically, we prefer the second solution.
 
 
