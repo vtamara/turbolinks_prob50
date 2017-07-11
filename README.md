@@ -19,7 +19,7 @@ will be saved but the user will be redirected to the show page as would
 happen when the user pushes the submit button (making it impossible to fill the 
 field in the second tab).
 
-# REPRODUCING THE PROBLEM
+# 1. REPRODUCING THE PROBLEM
 
 To see the application working with turbolinks 2.5.3:
 
@@ -67,7 +67,7 @@ To see the problem with turbolinks 5.0.1:
 - You will be redirected to the show page
 ![show](https://raw.githubusercontent.com/vtamara/turbolinks_prob50/master/doc/show.png)
 
-# PROBLEM
+# 2. PROBLEM
 
 Using turbolinks 2.5.3 the sequence of requests done by the browser when
 the user clicks on the link of the second tab is:
@@ -96,7 +96,7 @@ it is ```turbolinks``` that is boolean (I have not found official
 documentation for it).
 
 
-# SOLUTIONS
+# 3. SOLUTIONS
 
 In order to obtain the same behavior of Turbolinks 2.5.3 in this application with 
 Turbolinks 5.0.1  we have found two ways:
