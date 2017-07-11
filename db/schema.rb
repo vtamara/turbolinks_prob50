@@ -13,8 +13,9 @@
 ActiveRecord::Schema.define(version: 20170711012247) do
 
   create_table "model1s", force: :cascade do |t|
-    t.string "field1"
-    t.string "field2"
+    t.string   "field1"
+    t.string   "field2"
+    t.string   "field3"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
