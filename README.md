@@ -30,21 +30,29 @@ git clone  https://github.com/vtamara/turbolinks_prob50.git
 ![tab1](https://raw.githubusercontent.com/vtamara/turbolinks_prob50/master/doc/tab1.png)
 
 - When you change to the second tab, you will see that the server answers
-  an AJAX request to save the form, and the user sees the contents of the
+  an AJAX request to save the form, and the user can fill the fields of the
   second tab
 ![tab2](https://raw.githubusercontent.com/vtamara/turbolinks_prob50/master/doc/tab2.png)
 
 
 To see the problem with turbolinks 5.0.1:
 - In the sources edit Gemfile and change the line
+```
 	gem 'turbolinks', '2.5.3'
+```
   with
+```
 	gem 'turbolinks', '5.0.1'
+```
 - Update
+```
 	bundle update turbolinks
 	bundle install
+```
 - Launch server
+```
 	rails s
+```
 - Open in browser http://127.0.0.1/model1s/new and try to click on the
   link of the second tab
 - You will be redirected to the show page
