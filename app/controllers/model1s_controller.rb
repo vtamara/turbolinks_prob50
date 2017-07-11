@@ -69,6 +69,6 @@ class Model1sController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def model1_params
-      params.require(:model1).permit(:field1, :field2)
+      params.require(:model1).permit(:field1, :field2, :field3)
     end
 end

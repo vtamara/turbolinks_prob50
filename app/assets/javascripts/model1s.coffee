@@ -5,7 +5,12 @@
 @send_form =  ->
   f=$('form')
   a=f.attr('action')
-  $.post(a, f.serialize())
+  $.ajax({
+    type: 'POST',
+    url: a,
+    data: f.serialize()
+    dataType: 'json'
+  });
 
 
 # Envia formulario al presionar enlaces con clase fichacambia 

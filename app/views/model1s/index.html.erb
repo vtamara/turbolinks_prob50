@@ -8,6 +8,7 @@
       <th><%= model_class.human_attribute_name(:id) %></th>
       <th><%= model_class.human_attribute_name(:field1) %></th>
       <th><%= model_class.human_attribute_name(:field2) %></th>
+      <th><%= model_class.human_attribute_name(:field3) %></th>
       <th><%= model_class.human_attribute_name(:created_at) %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
@@ -18,6 +19,7 @@
         <td><%= link_to model1.id, model1_path(model1) %></td>
         <td><%= model1.field1 %></td>
         <td><%= model1.field2 %></td>
+        <td><%= model1.field3 %></td>
         <td><%=l model1.created_at %></td>
         <td>
           <%= link_to t('.show', :default => t("helpers.links.show")),
