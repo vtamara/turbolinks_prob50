@@ -1,9 +1,12 @@
-# Change with AJAX POST and redirecto_to by using turbolinks 2.5.3 and turbolinks 5.0 in Rails Applications
+# Change in Rails Application that uses AJAX POST and redirecto_to between turbolinks 2.5.3 and turbolinks 5.0.1
 
-Some rails application, like this one, require saving automatically a 
-form while the user is filling it, but continue editing the form. 
-This was simpler to do with Turbolinks 2.5.3, but also possible with
-Turbolinks 5.0 although not very well documented.
+Some Rails application, like this one, require saving automatically a 
+form while the user is filling it, but continue allowing the user to edit.
+This was simpler to do with Turbolinks 2.5.3, therefore an application could 
+keep using turbolinks 2.5.3 but there would be problems to update to 
+Rails 5.1 (since turbolinks 2.5.3 uses ```before_filter``` depreacted in favor
+of ```before_action```). Anyway there is solution with Turbolinks 5.0 
+although not very well documented. 
 
 This simple application has one form with 2 tabs and some fields in each tab.
 It is expected that the form will save automatically when the user changes 
@@ -13,7 +16,7 @@ rails controller).
 It works as expected using turbolinks 2.5.3.
 However with turbolinks 5.0.1 when the user changes to the second tab the form
 will be saved but the user will be redirected to the show page as would 
-happen when the user submits the form (making it impossible to fill the 
+happen when the user pushes the submit button (making it impossible to fill the 
 field in the second tab).
 
 # REPRODUCING THE PROBLEM
@@ -31,14 +34,14 @@ git clone  https://github.com/vtamara/turbolinks_prob50.git
 	rails db:setup
 	rails s 
 ```
-- Open the form in browser at http://127.0.0.1/model1s/new
-- You will see a form with two tabs (one field in the first one and two in 
+- Open the form in a browser at http://127.0.0.1/model1s/new
+- You will see the form with two tabs (one field in the first one and two in 
   the second)
 ![tab1](https://raw.githubusercontent.com/vtamara/turbolinks_prob50/master/doc/tab1.png)
 
 - When you change to the second tab, you will see that the server answers
-  to an AJAX request by saving the form, and the user can fill the fields 
-  of the second tab
+  to an AJAX request by updating the model, and the user can continue
+  filling the fields of the second tab
 ![tab2](https://raw.githubusercontent.com/vtamara/turbolinks_prob50/master/doc/tab2.png)
 
 To see the problem with turbolinks 5.0.1:
@@ -109,7 +112,7 @@ format.html { redirect_to @model1, notice: 'Model1 was successfully updated.', t
 ```
 
 
-2. Or make the AJAX request asking for json (or script) instead of HTML, 
+2. Or make the AJAX request asking for json (or script or xml) instead of HTML, 
    by changing in ```app/assets/javascripts/model1s.coffe```
 ```
 @send_form =  ->
@@ -130,11 +133,16 @@ with
   });
 ```
 
-The second solution uses the format.json of the action in the controller, 
-it doesn't try to render the whole page as the first solution does.
+The second solution uses the format.json of the action in the controller
+```app/controllers/model1s_controller.rb```, and returns the model in
+JSON.  If no response is needed it is possible to use:
+```
+	format.json { head :no_content }
+```
+
 
 Then to obtain the increase of speed of turbolinks in a normal redirect_to 
 when the users saves but avoiding to redirect in the browser when
-the form is saved automatically, we prefer the second solution.
+the form is saved automatically, we  prefer the second solution.
 
 
